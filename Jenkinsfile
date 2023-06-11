@@ -41,5 +41,6 @@ pipeline {
          sh 'ssh -o  StrictHostKeyChecking=no ubuntu@10.10.10.35 "docker run -t owasp/zap2docker-stable zap-baseline.py -t http://10.10.10.39:8080/webapp/" || true'
         }
       }
+     }
   }
 }
