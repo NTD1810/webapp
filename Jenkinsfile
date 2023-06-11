@@ -12,6 +12,14 @@ pipeline {
             ''' 
       }
     }
+           
+    stage ('Check-Git-Secrets') {
+      steps {
+        sh 'rm trufflehog || true'
+        sh 'docker run gesellix/trufflehog --json https://github.com/NTD1810/webapp.git > trufflehog'
+        sh 'cat trufflehog'
+      }
+    }
     
     stage ('SAST') {
       steps {
@@ -25,14 +33,6 @@ pipeline {
     stage ('Build') {
       steps {
       sh 'mvn clean package'
-      }
-    }
-       
-    stage ('Check-Git-Secrets') {
-      steps {
-        sh 'rm trufflehog || true'
-        sh 'docker run gesellix/trufflehog --json https://github.com/NTD1810/webapp.git > trufflehog'
-        sh 'cat trufflehog'
       }
     }
     
